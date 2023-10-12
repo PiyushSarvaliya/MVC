@@ -1,9 +1,15 @@
 const {Router} = require("express")
-const { userdata, usercreate, login } = require("../controllers/user.logic")
+const {usercreate, login,  index, forms, icontabler, samplepage, uibuttons, uicard, uitypography } = require("../controllers/user.logic")
 const check = require("../middleware/user.middleware")
 const app = Router()
 
-app.get("/" , userdata )
+app.get("/" , index )
+app.get("/form", forms)
+app.get("/icon-tabler" , icontabler)
+app.get("/sample-page" , samplepage)
+app.get("/ui-buttons" , uibuttons)
+app.get("/ui-card" , uicard)
+app.get("/ui-typography" , uitypography)
 app.post("/" ,check , usercreate)
 app.post("/login" ,  login)
 

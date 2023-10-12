@@ -3,7 +3,10 @@ const connect = require("./config/db")
 const router = require("./routes/user.route")
 const app = express()
 app.use(express.json())
-app.use(router)
+app.set("view engine" , "ejs")
+app.set("viwes" , __dirname + "/views")
+app.use(express.static(__dirname + "/public"))
+app.use("/modernize",router)
 
 
 

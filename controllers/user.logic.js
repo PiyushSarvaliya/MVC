@@ -1,8 +1,25 @@
 const users = require("../modals/user.schema")
 
-const userdata = async(req , res) =>{
-    let data = await users.find()
-    res.send(data)
+const index = async(req , res) =>{
+    res.render("index")
+}
+const forms = async(req , res)=>{
+    res.render("ui-forms")
+}
+const icontabler = (req , res)=>{
+    res.render("icon-tabler")
+}
+const samplepage = (req , res)=>{
+    res.render("sample-page")
+}
+const uibuttons = (req ,res) =>{
+    res.render("ui-buttons")
+}
+const uicard = (req , res) =>{
+    res.render("ui-card")
+}
+const uitypography = (req ,res) =>{
+    res.render("ui-typography")
 }
 const usercreate = async(req , res) =>{
     let {email} = req.body
@@ -30,4 +47,4 @@ const login = async(req , res) =>{
     }
 }
 
-module.exports = {userdata , usercreate , login}
+module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography }
