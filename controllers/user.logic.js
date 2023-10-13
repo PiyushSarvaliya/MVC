@@ -21,10 +21,13 @@ const uicard = (req , res) =>{
 const uitypography = (req ,res) =>{
     res.render("ui-typography")
 }
+const loginui = async(req,res)=>{
+    res.render("login")
+}
 const usercreate = async(req , res) =>{
     let {email} = req.body
     let namedata= await users.find({email})
-    if(!email == namedata){
+    if(email != namedata){
         let data = await users.create(req.body)
         res.send(data)
     }
@@ -34,17 +37,17 @@ const usercreate = async(req , res) =>{
 }
 const login = async(req , res) =>{
     let {email , password} = req.body
-    let user = await users.find({email : email})
-    console.log(user);
-    if(!email == user){
+    let user = await users.findOne({email : email})
+    if(!user){
         res.send("user not found")
     }
     else if(password != user.password){
         res.send("password is incorrect")
     }
     else{
-        res.send("login successfully")
+        res.cookie("id" , user.id).send("checking")
     }
+    
 }
 
-module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography }
+module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography , loginui}
