@@ -1,5 +1,10 @@
 const users = require("../modals/user.schema")
 
+const data = async(req , res) =>{
+    let detail = await users.find()
+    res.send(detail)
+}
+
 const index = async(req , res) =>{
     res.render("index")
 }
@@ -24,15 +29,18 @@ const uitypography = (req ,res) =>{
 const loginui = async(req,res)=>{
     res.render("login")
 }
+const singup = (req , res) =>{
+    res.render("register")
+}
 const usercreate = async(req , res) =>{
-    let {email} = req.body
-    let namedata= await users.find({email})
-    if(email != namedata){
+    let {email , password , name} = req.body
+    let namedata= await users.find()
+    if(email != namedata.email){
         let data = await users.create(req.body)
         res.send(data)
     }
     else{
-        res.send({message : "account is already exist"})
+        res.redirect("login")
     }
 }
 const login = async(req , res) =>{
@@ -50,4 +58,4 @@ const login = async(req , res) =>{
     
 }
 
-module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography , loginui}
+module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography , loginui , singup , data}
