@@ -17,4 +17,13 @@ const finduser = async(req ,res, next) =>{
     }
 }
 
-module.exports = finduser
+const authorize = async(req ,res ,next) =>{
+    if(req.user){
+        next()
+    }
+    else{
+        res.redirect("/login")
+    }
+}
+
+module.exports = {finduser , authorize}

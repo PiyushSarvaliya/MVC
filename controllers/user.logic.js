@@ -56,7 +56,7 @@ const login = async(req , res) =>{
     //     res.cookie("id" , user.id).send("checking")
     // }
     
-    return res.send("login success")
+    return res.redirect("/")
 }
 
 module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography , loginui , singup , data}
