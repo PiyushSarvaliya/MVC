@@ -45,17 +45,18 @@ const usercreate = async(req , res) =>{
 }
 const login = async(req , res) =>{
     let {email , password} = req.body
-    let user = await users.findOne({email : email})
-    if(!user){
-        res.send("user not found")
-    }
-    else if(password != user.password){
-        res.send("password is incorrect")
-    }
-    else{
-        res.cookie("id" , user.id).send("checking")
-    }
+    // let user = await users.findOne({email : email})
+    // if(!user){
+    //     res.send("user not found")
+    // }
+    // else if(password != user.password){
+    //     res.send("password is incorrect")
+    // }
+    // else{
+    //     res.cookie("id" , user.id).send("checking")
+    // }
     
+    return res.send("login success")
 }
 
 module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography , loginui , singup , data}
