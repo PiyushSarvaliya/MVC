@@ -3,7 +3,9 @@ const {usercreate, login,  index, forms, icontabler, samplepage, uibuttons, uica
 const check = require("../middleware/user.middleware")
 const passport = require("passport")
 const { finduser, authorize } = require("../middleware/auth")
+const router2 = require("./product.routes")
 const app = Router()
+app.use("/product" , router2)
 
 app.get("/" , index )
 app.get("/data" , finduser , data)

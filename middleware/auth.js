@@ -1,4 +1,3 @@
-const { login } = require("../controllers/user.logic")
 const users = require("../modals/user.schema")
 
 const finduser = async(req ,res, next) =>{

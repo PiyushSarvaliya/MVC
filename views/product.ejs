@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #product{
+            display: grid;
+            grid-template-columns: repeat(3 ,1fr);
+        }
+    </style>
+</head>
+<body>
+    <form action="/product/create" method="post">
+        <input type="text" name="title">
+        <input type="number" name="price">
+        <input type="url" name="img">
+        <input type="text" name="cat">
+        <input type="submit">
+    </form>
+    <div id="product"></div>
+</body>
+<script>
+    fetch("/product/products")
+    .then((res) => res.json())
+    .then((data) =>{
+        data.map((ele)=>{
+            let h3 = document.createElement("h3")
+            h3.innerHTML = ele.title;
+            let img = document.createElement("img")
+            img.src = ele.img;
+            img.setAttribute("width","200px")
+            let h4 = document.createElement("h4")
+            h4.innerHTML = ele.price;
+            let p = document.createElement("p")
+            p.innerHTML = ele.cat;
+            let div = document.createElement("div")
+            div.append(h3 , img , h4 , p)
+            document.getElementById("product").append(div)
+        })
+    })
+</script>
+</html>
