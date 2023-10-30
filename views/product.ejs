@@ -6,8 +6,26 @@
     <title>Document</title>
     <style>
         #product{
+            margin-top: 50px;
             display: grid;
-            grid-template-columns: repeat(3 ,1fr);
+            gap: 20px;
+            grid-template-columns: repeat(4 ,1fr);
+        }
+        #product div{
+            text-align: center;
+            border: solid 2px black;
+        }
+        #product div h3{
+            font-size: 25px;
+            text-transform: capitalize;
+        }
+        #product div h4{
+            font-size: 20px;
+            text-transform: capitalize;
+        }
+        #product div p{
+            font-size: 18px;
+            text-transform: capitalize;
         }
     </style>
 </head>
@@ -19,6 +37,16 @@
         <input type="text" name="cat">
         <input type="submit">
     </form>
+
+    <h1>update form : click update button </h1>
+    <form action="/product/update" method="post">
+        <input type="text" name="title" id="title">
+        <input type="number" name="price" id="price">
+        <input type="url" name="img" id="img">
+        <input type="text" name="cat" id="cat">
+        <input type="text" name="_id" id="id">
+        <input type="submit" value="update">
+    </form>
     <div id="product"></div>
 </body>
 <script>
@@ -27,16 +55,32 @@
     .then((data) =>{
         data.map((ele)=>{
             let h3 = document.createElement("h3")
-            h3.innerHTML = ele.title;
+            h3.innerHTML = `title : ${ele.title}`;
             let img = document.createElement("img")
             img.src = ele.img;
-            img.setAttribute("width","200px")
+            img.setAttribute("width","150px")
             let h4 = document.createElement("h4")
-            h4.innerHTML = ele.price;
+            h4.innerHTML = `price : ${ele.price}`;
             let p = document.createElement("p")
-            p.innerHTML = ele.cat;
+            p.innerHTML = `category : ${ele.cat}`;
+            let del = document.createElement("button")
+            del.innerHTML = "DELETE";
+            del.addEventListener("click" , ()=>{
+                fetch(`/product/delete/${ele._id}`,{
+                    method : "DELETE"
+                })
+            })
+            let update = document.createElement("button")
+            update.innerHTML = "UPDATE"
+            update.addEventListener("click" ,()=>{
+                document.getElementById("title").value = ele.title
+                document.getElementById("price").value = ele.price
+                document.getElementById("cat").value = ele.cat
+                document.getElementById("img").value = ele.img
+                document.getElementById("id").value = ele._id
+            })
             let div = document.createElement("div")
-            div.append(h3 , img , h4 , p)
+            div.append(h3 , img , h4 , p , del , update)
             document.getElementById("product").append(div)
         })
     })
