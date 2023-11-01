@@ -1,5 +1,5 @@
 const {Router} = require("express")
-const {usercreate, login,  index, forms, icontabler, samplepage, uibuttons, uicard, uitypography, loginui, singup, data } = require("../controllers/user.logic")
+const {usercreate, login,  index, forms, icontabler, samplepage, uibuttons, uicard, uitypography, loginui, singup, data, resetpassword, otpsend, verify } = require("../controllers/user.logic")
 const check = require("../middleware/user.middleware")
 const passport = require("passport")
 const { finduser, authorize } = require("../middleware/auth")
@@ -7,7 +7,7 @@ const router2 = require("./product.routes")
 const app = Router()
 app.use("/product" , router2)
 
-app.get("/" , index )
+app.get("/" , authorize,index )
 app.get("/data" , finduser , data)
 app.get("/form", forms)
 app.get("/icon-tabler" , icontabler)
@@ -23,5 +23,11 @@ app.post("/login" , passport.authenticate("local") ,login)
 app.get("/user" , authorize ,  async(req,res)=>{
     res.send(req.user)
 })
+app.get("/profile" , (req , res) =>{
+    res.render("profile")
+})
+app.post("/reset",authorize , resetpassword)
+app.post("/otp" , otpsend)
+app.post("/verify" , verify)
 
 module.exports = app

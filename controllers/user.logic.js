@@ -1,4 +1,13 @@
 const users = require("../modals/user.schema")
+const nodemailer = require("nodemailer")
+
+const transponter = nodemailer.createTransport({
+    service : "gmail",
+    auth :{
+        user : "piyushsarvaliya123@gmail.com",
+        pass : "qmnq auvw gqhj qmpe",
+    }
+})
 
 const data = async(req , res) =>{
     let detail = await users.find()
@@ -48,4 +57,58 @@ const login = async(req , res) =>{
     return res.redirect("/")
 }
 
-module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography , loginui , singup , data}
+const resetpassword = async(req , res) =>{
+    let {oldpassword , newpassword} = req.body
+    
+    if(oldpassword == req.user.password){
+        let data = await users.findByIdAndUpdate({password : newpassword})
+        res.send("password reset successfully")
+    }
+    else{
+        res.send("old password id wrong")
+    }
+}
+
+
+
+let otp = Math.floor(Math.random()*100000)
+const otpsend = async(req , res) =>{
+    let {email} = req.body
+
+    let mailoption = {
+        from : "piyushsarvaliya123@gmail.com",
+        to : email,
+        subject : "otp",
+        html : `<h1> otp : ${otp}</h1>`
+    }
+
+    await transponter.sendMail(mailoption , (err , info) =>{
+        if(err){
+            console.log(err)
+        }
+        else{
+            console.log(info)
+        }
+    })
+    res.send("otp is sending")
+}
+
+const verify = async(req , res) =>{
+    let {cotp , email , password} = req.body
+
+    if(otp == cotp){
+        let userdata = await users.findOne({email : email})
+        if(userdata){
+            userdata.password = password;
+            await userdata.save()
+            res.send(userdata)
+        }
+        else{
+            res.send("user not found")
+        }
+    }else{
+        res.send("wrong otp")
+    }
+}
+
+module.exports = {usercreate , login , index , forms , icontabler , samplepage , uibuttons , uicard , uitypography , loginui , singup , data , resetpassword , otpsend , verify}
