@@ -4,9 +4,9 @@ const check = require("../middleware/user.middleware")
 const passport = require("passport")
 const { finduser, authorize } = require("../middleware/auth")
 const router2 = require("./product.routes")
+const cat = require("./category.routes")
+const subcat = require("./subcategory.route")
 const app = Router()
-app.use("/product" , router2)
-
 app.get("/" , authorize,index )
 app.get("/data" , finduser , data)
 app.get("/form", forms)
@@ -29,5 +29,9 @@ app.get("/profile" , (req , res) =>{
 app.post("/reset",authorize , resetpassword)
 app.post("/otp" , otpsend)
 app.post("/verify" , verify)
+
+app.use("/product" , router2)
+app.use("/category" , cat)
+app.use("/subcategory" , subcat)
 
 module.exports = app
